@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+
+#
+# Script for creating a RobotLib project.
+# Written By: Brach Knutson
+#
+
+currentDir=$PWD
+
+echo "Welcome to the RobotLib New Project creator!"
+echo "Currently working in $currentDir"
+
+read -p "Please enter the name of your project: " name
+read -p "Please enter the directory for your new project: " directory
+echo "A new RobotLib project called $name will be placed here: $directory"
+
+read -p "Are you sure? [y/n] " sure
+
+if [ $sure = "y" ]
+then
+
+echo "Creating Project..."
+#create project
+cd $directory
+mkdir $name
+
+#copy RobotLib into the new project
+cd $name
+cp -r $currentDir/../robotController $PWD
+cp -r $currentDir/../tools $PWD
+cp $currentDir/../*.cpp $PWD
+cp $currentDir/../*.h $PWD
+
+else
+
+echo "Aborting."
+
+fi
+
+cd $currentDir

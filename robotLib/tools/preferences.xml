@@ -1,0 +1,28 @@
+<RobotLibProject version="1.0">
+	<!-- Dependencies required for compilation. These must be listed in order of dependency! -->
+	<dependencies>
+		<!-- RobotLib -->
+		<dependency>
+			<rule>robotController/lib/RobotController.a</rule>
+			<command>`find robotController/bin -name "*.o"`</command>
+		</dependency>
+		
+		<!-- pthread -->
+		<dependency>
+			<rule></rule>
+			<command>-lpthread</command>
+		</dependency>
+		
+		<!-- wiringPi -->
+		<dependency>
+			<rule></rule>
+			<command>-lwiringPi</command>
+		</dependency>
+		
+		<!-- OpenCV -->
+		<dependency>
+			<rule></rule>
+			<command>`pkg-config --cflags --libs opencv`</command>
+		</dependency>
+	</dependencies>
+</RobotLibProject>

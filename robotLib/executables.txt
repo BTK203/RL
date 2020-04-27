@@ -1,0 +1,5 @@
+Executables that must be installed/uninstalled
+
+- QuietGPIO
+- SetupRLHostapd
+- RLBootscript
