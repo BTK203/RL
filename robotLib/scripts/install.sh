@@ -10,19 +10,30 @@ InstallRLTools() {
 	echo "Installing RL Tools"
 	mkdir bin
 	g++ -o bin/QuietGPIO QuietGPIO.cpp -lwiringPi
-	g++ -o bin/SetupRLHostapd SetupRLHostapd.cpp
+	g++ -o bin/SetupRLHostapd SetupRLHostapd.cpp FileUtils.cpp
+	g++ -o bin/CreateRLEV CreateRLEV.cpp FileUtils.cpp
 	
 	sudo ln bin/QuietGPIO /usr/bin/quietgpio
 	sudo ln bin/SetupRLHostapd /usr/bin/setuprlhostapd
+	sudo ln bin/CreateRLEV /usr/bin/createrlev
 	sudo ln command.sh /usr/bin/rlcommand
+	
+	cd ..
+	sudo createrlev --set $PWD
+	#temporarily add environment variable so that it can be used later in the install.
+	RLDir=$PWD
+	cd scripts
 }
 
 UninstallRLTools() {
 	echo "Uninstalling RL Tools"
 	
+	sudo createrlev --remove
+	
 	rm -r bin
 	sudo rm /usr/bin/quietgpio
 	sudo rm /usr/bin/setuprlhostapd
+	sudo rm /usr/bin/createrlev
 	sudo rm /usr/bin/rlcommand
 }
 
@@ -45,6 +56,7 @@ InstallOpenCV() {
 	
 	cd ..
 	mkdir opencv
+	cd opencv
 	wget https://github.com/opencv/opencv/archive/3.4.5.zip
 	unzip 3.4.5.zip
 	mkdir build
@@ -96,7 +108,7 @@ InstallHostapd() {
 	sudo apt-get --assume-yes install hostapd
 	sudo systemctl stop hostapd
 	echo
-	sudo setuprlhostapd
+	sudo setuprlhostapd -t conffiles/hostapd.conf
 }
 
 UninstallHostapd() {
@@ -136,7 +148,7 @@ then
 	read -p "Are you sure? [y/n]: " sure
 	if [ $sure = "y" ];
 	then
-		read -p "Install OpenCV as well?" cv
+		read -p "Install OpenCV as well? [y/n]: " cv
 		echo "Installing"
 		InstallRLTools
 		sudo apt-get --assume-yes install cmake
@@ -151,7 +163,6 @@ then
 		PromptReboot
 	else
 		echo "Aborting."
-		return 0
 	fi
 
 	echo "Install Complete!"
@@ -173,7 +184,7 @@ then
 	read -p "Are you sure? [y/n]: " sure
 	if [ $sure = "y" ];
 	then
-		read -p "Uninstall OpenCV as well?" cv
+		read -p "Uninstall OpenCV as well? [y/n]: " cv
 		echo "Uninstalling"
 		UninstallRLTools
 		UnconfigureDHCP

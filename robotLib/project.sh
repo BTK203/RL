@@ -71,8 +71,8 @@ fi
 if [ $1 = "localUpdate" ];
 then
 rm -r robotController
-cp -r /home/pi/robotLib/tools $PWD
-cp -r /home/pi/robotLib/robotController $PWD
+cp -r $RLDir/tools $PWD
+cp -r $RLDir/robotController $PWD
 compileController
 compileTools
 
@@ -98,7 +98,7 @@ fi
 
 echo
 echo "RobotLib Project Helper"
-echo "Usage: sh ProjectHelper.sh [action]"
+echo "Usage: sh project.sh [action]"
 echo
 echo "Possible Actions:"
 echo "compile                - Compile the RobotLib project. Executable will be called 'Main'"

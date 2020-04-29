@@ -4,7 +4,12 @@
 #
 
 invokedDir=$PWD
-cd /home/pi/robotLib/scripts
+
+if [ "$RLDir" != "" ];
+then
+	cd $RLDir
+	cd scripts
+fi
 
 echo "Welcome to RobotLib!"
 echo "Please enter an Action"

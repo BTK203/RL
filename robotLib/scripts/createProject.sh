@@ -36,13 +36,14 @@ cp $currentDir/../project.sh $PWD
 #set up tools
 echo "Setting up tools..."
 cd tools
-make setup
+make -s setup
 make -s -j4 all
 cd ..
 
 #compile RobotLib
 echo "Compiling RobotLib sources..."
 cd robotController
+make setup
 make -s -j4 lib/RobotController.a
 cd ..
 

@@ -12,11 +12,12 @@ clean:
 	make setup
 
 cleanall:
+	rm -r bin
+	mkdir bin
 	rm -r robotController/bin
 	rm -r robotController/lib
 	mkdir robotController/bin
 	mkdir robotController/lib
 	mkdir robotController/bin/comm
 	mkdir robotController/bin/util
-	make clean
 
